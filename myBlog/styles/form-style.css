@@ -1,0 +1,17 @@
+#loginForm, #registerForm, #createPostForm, #blogPost{
+    border-radius:15px;
+    align-items:center;
+    margin: 30px auto auto;
+    background: url("..images/form-background.jpg");
+    width:40%;
+    height:60%;
+    text-align: center;
+    padding:25px 150px 25px 150px;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
+    /*margin:5px 0px 0px 250px;*/
+
+}
+#blogPost{
+    background:#DDD;
+    width:80%;
+}
