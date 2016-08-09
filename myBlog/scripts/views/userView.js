@@ -31,6 +31,7 @@ class UserView {
                     };
 
                     triggerEvent('login',data);
+                    
                 });
 
             });
@@ -66,6 +67,7 @@ class UserView {
                         confirmPwd: confirmPwd
                     };
                     triggerEvent('register',data);
+
                 });
             });
         })

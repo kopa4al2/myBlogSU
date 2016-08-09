@@ -1,19 +1,29 @@
 {{#blogPosts}}
 <li class="single-post">
-    <article id="post-{{postId}}">
+    <article id="post-{{_id}}">
         <div class="dot">&nbsp;</div>
         <h3 class="title">{{title}}</h3>
         <p class="subtitle">Posted on {{date}} by {{author}}</p>
         <p class="content">{{content}}</p>
+        {{#comments}}
         <div class="main-content">
             <ul class="commentsSection" id="commentsSection">
-
+                <li class="single-comment">
+                    <article>
+                        <div class="dot">&nbsp</div>
+                        <p>{{commentAuthor}}</p>
+                        <p>{{commentContent}}</p>
+                    </article>
+                </li>
             </ul>
         </div>
-        <form>
-            <label for="comment-{{postId}}" class="form-control-static">Write a comment</label>
-            <textarea id="comment-{{postId}}" class="form-control" id="commentTextArea" cols="10" rows="5">
+        {{/comments}}
+        <form class="commentForm">
+            <label for="comment-{{_id}}" class="form-control-static">Write a comment</label>
+            <textarea id="comment-{{_id}}" class="form-control" id="commentTextArea" cols="6" rows="5">
             </textarea>
+            <br>
+            <button id="{{_id}}" type="button" class="btn-sm">Submit</button>
         </form>
     </article>
 </li>

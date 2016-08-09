@@ -36,10 +36,10 @@ const _guestAuthToken = "f1ebfa7b-cdf4-4648-9240-6f2e7ee5bcef.BAdeztOtGwfa05SQNN
         else if(!authService.isLoggedIn()) {
             homeController.showGuestPage();
         }
-        //TODO ADMIN
         // Check if user is logged in and if its not show the guest page, otherwise show the user page...
     });
-
+    
+    
     onRoute("#/post-:id", function () {
         // Create a redirect to one of the recent posts...
     });
@@ -51,6 +51,7 @@ const _guestAuthToken = "f1ebfa7b-cdf4-4648-9240-6f2e7ee5bcef.BAdeztOtGwfa05SQNN
 
     onRoute("#/register", function () {
         userController.showRegisterPage(authService.isLoggedIn());
+
     });
 
     onRoute("#/logout", function () {
@@ -69,7 +70,9 @@ const _guestAuthToken = "f1ebfa7b-cdf4-4648-9240-6f2e7ee5bcef.BAdeztOtGwfa05SQNN
     onRoute('#/profile',function(){
         profileController.showProfilePage(authService.isAdmin());
     });
-    
+    bindEventHandler('comment', function (ev,data) {
+        homeController.comment(data);
+    });
     bindEventHandler('login', function (ev, data) {
 
         // Login the user...

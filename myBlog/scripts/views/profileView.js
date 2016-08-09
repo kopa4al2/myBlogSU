@@ -17,13 +17,16 @@ class ProfileView {
             let renderMenu = Mustache.render(template, null);
             $(_that._containerSelector).html(renderMenu);
         });
+
         $.get('templates/profile-page.html', function (template) {
-            let profileData = {
-                username: "username1"
-            };
-            console.log(profileData);
-            let renderProfilePage = Mustache.render(template,profileData);
-            $('#profilePage').html(renderProfilePage);
+
+            let profileData={profilePage: ['stefa']};
+            let renderer=Mustache.to_html(template,profileData);
+            console.log(renderer);
+            let renderProfilePage = Mustache.render(template, profileData); //todo
+            console.log(renderProfilePage);
+            //$(_that._mainContentSelector).html(renderProfilePage);
+            $("#profilePage").html(renderer);
         });
     }
 

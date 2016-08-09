@@ -10,7 +10,7 @@ class HomeController {
         let _that = this;
         //let recentPosts = [];
         let requestUrl = this._serviceUrl + "appdata/" + this._appId + "/posts";
-        
+
         this._requester.get(requestUrl,
             function success(data) {
                 data.sort(function (elem1, elem2) {
@@ -52,7 +52,8 @@ class HomeController {
         let _that = this;
         let recentPosts = [];
         let requestUrl = this._serviceUrl + "appdata/" + this._appId + "/posts";
-
+        let requestUrlComments = this._serviceUrl + "appdata/" + this._appId + "/comments";
+        let postId;
         this._requester.get(requestUrl,
             function success(data) {
                 data.sort(function (elem1, elem2) {
@@ -61,11 +62,43 @@ class HomeController {
                     return date2 - date1;
                 });
                 _that._homeView.showAdminPage(data);
+                for (let blog of data) {
+                    _that._requester.get(requestUrlComments,
+                        function success(commentData) {
+
+                            let commentRenderedData;
+                            for (let comment of commentData) {
+                                if (comment.PostId == blog._id) {
+                                    commentRenderedData=comment;
+                                }
+
+                            }
+
+                            _that._homeView.showAdminPage(data, commentRenderedData);
+                        },
+                        function error(commentData) {
+                            showPopup('error', "error loading comments")
+                        });
+                }
 
             },
             function fail(data) {
                 showPopup('error', "Error loading posts");
             }
         );
+
+
     };
+
+    comment(data) {
+        let commentUrl = this._serviceUrl + "appdata/" + this._appId + "/comments";
+        this._requester.post(commentUrl, data,
+            function success(response) {
+                showPopup('success', "comment submitted");
+                location.reload();
+            },
+            function error(response) {
+                showPopup('error', "there was an error submitting your comment")
+            })
+    }
 }

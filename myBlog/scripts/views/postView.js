@@ -20,8 +20,8 @@ class PostView {
                          let title=$('#blogTitle').val();
                          let content=$('#blogContent').val();
                          let data={
-                         title: title,
-                         content: content
+                         commentTitle: title,
+                         commentContent: content
                          };
 
                          triggerEvent('createPost',data);
