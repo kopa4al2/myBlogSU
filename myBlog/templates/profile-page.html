@@ -1,8 +1,15 @@
-{{#profilePage}}
-<!--<form id="profilePageForm">
-    <label for="username">Username</label>
-    <div id="username">{{username}}</div>
-    <a href="#/profile/edit" class="btn btn-lg" id="editProfilePageButton">Edit your data</a>
-</form>-->
-<div id="username"></div>
-{{/profilePage}}
+<form id="profilePageForm">
+    <div class="form-group-lg">
+        <label for="username" class="form-control-static">Username: </label>
+        <div id="username">{{username}}</div>
+        <label for="firstName" class="form-control-static">First name: </label>
+        <div id="firstName">{{firstname}}</div>
+        <label for="lastName" class="form-control-static">Last name: </label>
+        <div id="lastName">{{lastname}}</div>
+        <label for="gender">Gender</label>
+        <div id="gender">{{gender}}</div>
+        <label for="profile-picture" class="form-control-static">Profile picture</label>
+        <img id="profile-picture" class="img-rounded" src={{imgurl}}>
+        <a href="#/profile/edit" class="btn btn-lg" id="editProfilePageButton">Edit your data</a>
+    </div>
+</form>

@@ -10,7 +10,7 @@ class HomeController {
         let _that = this;
         //let recentPosts = [];
         let requestUrl = this._serviceUrl + "appdata/" + this._appId + "/posts";
-
+        let requestUrlComments = this._serviceUrl + "appdata/" + this._appId + "/comments";
         this._requester.get(requestUrl,
             function success(data) {
                 data.sort(function (elem1, elem2) {
@@ -18,8 +18,16 @@ class HomeController {
                     let date2 = new Date(elem2._kmd.ect);
                     return date2 - date1;
                 });
+                _that._requester.get(requestUrlComments,
+                    function success(commentData) {
+                        _that._homeView.showUserPage(data, commentData);
 
-                _that._homeView.showUserPage(data);
+                    },
+                    function error(commentData) {
+                        showPopup('error', "error loading comments")
+                    });
+
+
             },
             function fail(data) {
                 showPopup('error', "Error loading posts");
@@ -31,7 +39,7 @@ class HomeController {
         let _that = this;
         let recentPosts = [];
         let requestUrl = this._serviceUrl + "appdata/" + this._appId + "/posts";
-
+        let requestUrlComments = this._serviceUrl + "appdata/" + this._appId + "/comments";
         this._requester.get(requestUrl,
             function success(data) {
                 data.sort(function (elem1, elem2) {
@@ -39,8 +47,15 @@ class HomeController {
                     let date2 = new Date(elem2._kmd.ect);
                     return date2 - date1;
                 });
+                _that._requester.get(requestUrlComments,
+                    function success(commentData) {
+                        _that._homeView.showGuestPage(data, commentData);
 
-                _that._homeView.showGuestPage(data);
+                    },
+                    function error(commentData) {
+                        showPopup('error', "error loading comments")
+                    });
+
             },
             function fail(data) {
                 showPopup('error', "Error loading posts");
@@ -61,25 +76,15 @@ class HomeController {
                     let date2 = new Date(elem2._kmd.ect);
                     return date2 - date1;
                 });
-                _that._homeView.showAdminPage(data);
-                for (let blog of data) {
-                    _that._requester.get(requestUrlComments,
-                        function success(commentData) {
+                _that._requester.get(requestUrlComments,
+                    function success(commentData) {
+                        _that._homeView.showAdminPage(data, commentData);
 
-                            let commentRenderedData;
-                            for (let comment of commentData) {
-                                if (comment.PostId == blog._id) {
-                                    commentRenderedData=comment;
-                                }
+                    },
+                    function error(commentData) {
+                        showPopup('error', "error loading comments")
+                    });
 
-                            }
-
-                            _that._homeView.showAdminPage(data, commentRenderedData);
-                        },
-                        function error(commentData) {
-                            showPopup('error', "error loading comments")
-                        });
-                }
 
             },
             function fail(data) {

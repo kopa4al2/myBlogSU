@@ -5,19 +5,12 @@
         <h3 class="title">{{title}}</h3>
         <p class="subtitle">Posted on {{date}} by {{author}}</p>
         <p class="content">{{content}}</p>
-        {{#comments}}
-        <div class="main-content">
-            <ul class="commentsSection" id="commentsSection">
-                <li class="single-comment">
-                    <article>
-                        <div class="dot">&nbsp</div>
-                        <p>{{commentAuthor}}</p>
-                        <p>{{commentContent}}</p>
-                    </article>
-                </li>
-            </ul>
+        <div class="currentCommentUrl" id="currentCommentUrl">
+
         </div>
-        {{/comments}}
+        <div class="comments-{{_id}}" id="comments-{{_id}}">
+
+        </div>
         <form class="commentForm">
             <label for="comment-{{_id}}" class="form-control-static">Write a comment</label>
             <textarea id="comment-{{_id}}" class="form-control" id="commentTextArea" cols="6" rows="5">

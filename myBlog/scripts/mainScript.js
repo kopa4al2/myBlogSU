@@ -67,7 +67,7 @@ const _guestAuthToken = "f1ebfa7b-cdf4-4648-9240-6f2e7ee5bcef.BAdeztOtGwfa05SQNN
         profileController.showEditProfilePage(authService.isAdmin());
     });
     
-    onRoute('#/profile',function(){
+    onRoute('#/profile', function(){
         profileController.showProfilePage(authService.isAdmin());
     });
     bindEventHandler('comment', function (ev,data) {

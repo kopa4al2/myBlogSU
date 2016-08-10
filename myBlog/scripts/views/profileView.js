@@ -16,25 +16,32 @@ class ProfileView {
         $.get(menuTemplateUrl, function (template) {
             let renderMenu = Mustache.render(template, null);
             $(_that._containerSelector).html(renderMenu);
+
+            console.log(renderMenu);
+            $.get('templates/profile-page.html', function (template) {
+                let profileData = {
+                    username: userData.username,
+                    firstname:userData.firstname,
+                    lastname:userData.lastname,
+                    gender:userData.gender,
+                    imgurl:userData.imgurl
+                };
+                let renderProfilePage = Mustache.render(template, profileData);
+                console.log("profile renderer"+renderProfilePage);
+                $("#profilePage").html(renderProfilePage);
+            });
+
+
         });
 
-        $.get('templates/profile-page.html', function (template) {
 
-            let profileData={profilePage: ['stefa']};
-            let renderer=Mustache.to_html(template,profileData);
-            console.log(renderer);
-            let renderProfilePage = Mustache.render(template, profileData); //todo
-            console.log(renderProfilePage);
-            //$(_that._mainContentSelector).html(renderProfilePage);
-            $("#profilePage").html(renderer);
-        });
     }
 
     showEditProfilePage(isAdmin) {
         let _that = this;
         let menuTemplateUrl;
         if (isAdmin) {
-            menuTemplateUrl = 'templates/admin-page.html';
+            menuTemplateUrl = 'templates/admin-menu.html';
         }
         else {
             menuTemplateUrl = 'templates/user-page.html';
@@ -47,7 +54,10 @@ class ProfileView {
                 $(_that._mainContentSelector).html(renderEditProfilePage);
                 $('#submitEditProfilePage').bind('click', function (ev) {
                     //TODO
-                })
+                });
+                $('#cancelEditProfilePage').bind('click',function(){
+                    redirectUrl("#/profile");
+                });
             });
         });
 
