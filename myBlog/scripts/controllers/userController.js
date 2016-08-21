@@ -23,7 +23,9 @@ class UserController {
                 sessionStorage['username']=data.username;
                 sessionStorage['_authToken']=data._kmd.authtoken;
                 sessionStorage['userId']=data._id;
-                //TODO USER'S NAME
+                sessionStorage['firstname']=data.firstname;
+                sessionStorage['lastname']=data.lastname;
+                sessionStorage['gender']=data.gender;
                 redirectUrl("#/");
             },
             function error(data) {

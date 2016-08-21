@@ -4,46 +4,50 @@ class HomeView {
         this._mainContentSelector = mainContentSelector;
     }
 
-    showGuestPage(mainData,commentData) {
+    showGuestPage(mainData, commentData) {
         let _that = this;
         $.get('templates/default-guest-page.html', function (template) {
             let renderContainer = Mustache.render(template, null);
             $(_that._containerSelector).html(renderContainer);
         });
+        for (let post of mainData) {
+            post['date'] = post._kmd.ect;
+        }
         $.get('templates/posts.html', function (template) {
             let blogPosts = {
                 blogPosts: mainData
             };
 
             let renderPosts = Mustache.render(template, blogPosts);
-            $("#blogPost").html(renderPosts)
+            $("#blogPost").html(renderPosts);
 
             for (let blog of mainData) {
-                let comments={
-                    comments:null
+                let comments = {
+                    comments: null
                 };
-                let commentObjects=[];
+                let commentObjects = [];
                 for (let comment of commentData) {
                     if (comment.PostId == blog._id) {
                         commentObjects.push(comment);
                     }
                 }
-                comments['comments']=commentObjects;
+                comments['comments'] = commentObjects;
                 $.get('templates/comments.html', function (template) {
-                    let currentCommentUrl="#comments-"+blog._id;
-                    let renderComments=Mustache.render(template,comments);
+                    let currentCommentUrl = "#comments-" + blog._id;
+                    let renderComments = Mustache.render(template, comments);
                     $(currentCommentUrl).html(renderComments);
+
                 });
             }
-            $('.commentForm').find('.form-control').attr("disabled","disabled");
+            $('.commentForm').find('.form-control').attr("disabled", "disabled");
             $('.commentForm').find('.btn-sm').on('click', function () {
-                showPopup('error',"Please log in to comment");
+                showPopup('error', "Please log in to comment");
             });
 
         });
     };
 
-    showUserPage(mainData,commentData) {
+    showUserPage(mainData, commentData) {
         let _that = this;
         $.get('templates/default-user-page.html', function (template) {
             let renderContainer = Mustache.render(template, null);
@@ -58,19 +62,19 @@ class HomeView {
             $("#blogPost").html(renderPosts);
             //<experimental>
             for (let blog of mainData) {
-                let comments={
-                    comments:null
+                let comments = {
+                    comments: null
                 };
-                let commentObjects=[];
+                let commentObjects = [];
                 for (let comment of commentData) {
                     if (comment.PostId == blog._id) {
                         commentObjects.push(comment);
                     }
                 }
-                comments['comments']=commentObjects;
+                comments['comments'] = commentObjects;
                 $.get('templates/comments.html', function (template) {
-                    let currentCommentUrl="#comments-"+blog._id;
-                    let renderComments=Mustache.render(template,comments);
+                    let currentCommentUrl = "#comments-" + blog._id;
+                    let renderComments = Mustache.render(template, comments);
                     $(currentCommentUrl).html(renderComments);
                 });
 
@@ -90,7 +94,6 @@ class HomeView {
             });
 
 
-//</experimental>
         });
 
     }
@@ -101,6 +104,7 @@ class HomeView {
             let renderContainter = Mustache.render(template, null);
             $(_that._containerSelector).html(renderContainter);
         });
+
         $.get('templates/posts.html', function (template) {
 
             let blogPosts = {
@@ -108,43 +112,54 @@ class HomeView {
             };
 
             let renderPosts = Mustache.render(template, blogPosts);
-            $("#blogPost").html(renderPosts);
-            //experimental part
-            for (let blog of mainData) {
-                let comments={
-                    comments:null
-                };
-                let commentObjects=[];
-                for (let comment of commentData) {
-                    if (comment.PostId == blog._id) {
-                        commentObjects.push(comment);
+            //RENDER POSTS AND COMMENTS
+            setTimeout(function () {
+                $("#blogPost").html(renderPosts);
+                for (let blog of mainData) {
+                    let comments = {
+                        comments: null
+                    };
+                    let commentObjects = [];
+                    for (let comment of commentData) {
+                        if (comment.PostId == blog._id) {
+                            if (commentObjects.length >= 5) {
+                                //TODO HIDE COMMENTS
+                            }
+                            commentObjects.push(comment);
+                        }
                     }
+                    comments['comments'] = commentObjects;
+                    $.get('templates/comments.html', function (template) {
+                        let currentCommentUrl = "#comments-" + blog._id;
+                        let renderComments = Mustache.render(template, comments);
+                        $(currentCommentUrl).html(renderComments);
+                        //TODO TAKE IT OUT OF THE FOR CYCLE
+                        $(".commentList").find('.boton').show();
+                        $(".commentList").find('.boton').bind('click', function () {
+                            let deleteData = this.id;
+                            triggerEvent('delComment', deleteData);
+                        });
+
+                    });
                 }
-                comments['comments']=commentObjects;
-                $.get('templates/comments.html', function (template) {
-                    let currentCommentUrl="#comments-"+blog._id;
-                    let renderComments=Mustache.render(template,comments);
-                    $(currentCommentUrl).html(renderComments);
+
+
+                $('.commentForm').find('.btn-sm').on('click', function () {
+                    let textAreaId = "comment-" + this.id;
+                    let postId = this.id;
+                    let content = document.getElementById(textAreaId).value;
+                    let currentUserUsername = sessionStorage.username;
+                    let data = {
+                        PostId: postId,
+                        commentAuthor: currentUserUsername,
+                        commentContent: content
+                    };
+                    triggerEvent('comment', data);
                 });
-            }
-
-
-            $('.commentForm').find('.btn-sm').on('click', function () {
-                let textAreaId = "comment-" + this.id;
-                let postId = this.id;
-                let content = document.getElementById(textAreaId).value;
-                let currentUserUsername = sessionStorage.username;
-                let data = {
-                    PostId: postId,
-                    commentAuthor: currentUserUsername,
-                    commentContent: content
-                };
-                triggerEvent('comment', data);
-            });
+            }, 300);
 
 
         });
-// </experimental part>
 
     }
 

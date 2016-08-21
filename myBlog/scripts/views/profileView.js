@@ -53,7 +53,36 @@ class ProfileView {
                 let renderEditProfilePage = Mustache.render(template, null);
                 $(_that._mainContentSelector).html(renderEditProfilePage);
                 $('#submitEditProfilePage').bind('click', function (ev) {
-                    //TODO
+                    let gender="";
+                    let firstName;
+                    let lastName;
+                    if ($("#firstName").val()!=""){
+                        firstName=$("#firstName").val();
+                    }
+                    else{
+                        firstName=sessionStorage['firstname'];
+                    }
+                    if ($("#lastName").val()!=""){
+                        lastName=$("#lastName").val();
+                    }
+                    else{
+                        lastName=sessionStorage['lastname']
+                    }
+                    if($("#maleRadioButton").is(':checked')){
+                        gender="Male";
+                    }
+                    else if($("#femaleRadioButton").is(':checked')){
+                        gender="Female";
+                    }
+                    else{
+                        gender=sessionStorage['gender'];
+                    }
+                    let data={
+                        firstname:firstName,
+                        lastname:lastName,
+                        gender:gender
+                    };
+                    triggerEvent('submitUserData',data);
                 });
                 $('#cancelEditProfilePage').bind('click',function(){
                     redirectUrl("#/profile");

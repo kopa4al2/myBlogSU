@@ -98,7 +98,6 @@ class AuthorizationService {
         }
 
         headers['Content-Type'] = 'application/json';
-
         return headers;
     }
 }

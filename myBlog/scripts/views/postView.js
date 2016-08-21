@@ -15,16 +15,18 @@ class PostView {
                     $(_that.mainContentSelector).html(renderMain);
 
                     $("#createPostButton").bind('click', function (ev) {
-                       
-                        
-                         let title=$('#blogTitle').val();
-                         let content=$('#blogContent').val();
-                         let data={
-                         title: title,
-                         content: content
-                         };
 
-                         triggerEvent('createPost',data);
+
+                        let title = $('#blogTitle').val();
+                        let content = $('#blogContent').val();
+                        let data = {
+                            title: title,
+                            content: content,
+                            author: sessionStorage['username']
+                    }
+                        ;
+
+                        triggerEvent('createPost', data);
                     });
                 });
             });

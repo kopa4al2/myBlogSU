@@ -87,8 +87,13 @@ const _guestAuthToken = "f1ebfa7b-cdf4-4648-9240-6f2e7ee5bcef.BAdeztOtGwfa05SQNN
 
     bindEventHandler('createPost', function (ev, data) {
         postController.createPost(data);
-        // Create a new post...
     });
+    bindEventHandler('delComment', function(ev, data) {
+        homeController.deleteComment(data);
+    });
+    bindEventHandler('submitUserData', function(ev, data){
+        profileController.submitProfileData(data);
+    })
 
     run('#/');
 })();

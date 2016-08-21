@@ -1,11 +1,14 @@
 {{#comments}}
     <ul class="commentsSection" id="commentsSection">
+        <form id="listCommentsForm" class="form-inline">
         <li class="single-comment">
             <article class="commentList">
-              <!--  <div class="comment-dot">&nbsp</div>-->
                 <div id="comment-content">{{commentContent}}</div>
                 <div id="comment-info">Posted by: {{commentAuthor}}, on {{creationDate}}</div>
+                <button hidden id="{{_id}}" type="button" class="boton">Delete</button> <!--TODO-->
+                <br>
             </article>
+        </form>
         </li>
     </ul>
 {{/comments}}

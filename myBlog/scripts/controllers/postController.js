@@ -10,6 +10,14 @@ class PostController {
         this._postView.showCreatePostPage(isLoggedIn,isAdmin,username);
     }
     createPost(requestData){
+        if(requestData.title.length<5){
+            showPopup('error',"Title cant be shorter than 5 symbols")
+            return;
+        }
+        if(requestData.content.length<30){
+            showPopup('error',"Post content too short");
+            return;
+        }
         let requestUrl = this._baseUrl + "appdata/" + this._appId + "/posts";
         this._requester.post(requestUrl, requestData,
             function success(data) {
