@@ -106,16 +106,15 @@ class HomeController {
                 showPopup('error', "there was an error submitting your comment")
             })
     }
+
     deleteComment(commentId) {
-        let deleteUrl=this._serviceUrl+"appdata/"+ this._appId + "/comments/" + commentId;
+        let deleteUrl = this._serviceUrl + "appdata/" + this._appId + "/comments/" + commentId;
         this._requester.delete(deleteUrl,
-        function success(response){
-            showPopup('info',"deleted comment");
-            location.reload();
-        },
-        function error(response){
-            showPopup('error',"Couldnt delete comment");
-            location.reload();
-        });
+            function success(response) {
+            },
+            function error(response) {
+                location.reload();
+                return;
+            });
     }
 }

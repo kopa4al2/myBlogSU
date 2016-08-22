@@ -10,8 +10,9 @@ class HomeView {
             let renderContainer = Mustache.render(template, null);
             $(_that._containerSelector).html(renderContainer);
         });
+
         for (let post of mainData) {
-            post['date'] = post._kmd.ect;
+            post['date'] = moment(post._kmd.ect).format("MMM Do YYYY");
         }
         $.get('templates/posts.html', function (template) {
             let blogPosts = {
@@ -19,31 +20,32 @@ class HomeView {
             };
 
             let renderPosts = Mustache.render(template, blogPosts);
-            $("#blogPost").html(renderPosts);
-
-            for (let blog of mainData) {
-                let comments = {
-                    comments: null
-                };
-                let commentObjects = [];
-                for (let comment of commentData) {
-                    if (comment.PostId == blog._id) {
-                        commentObjects.push(comment);
+            setTimeout(function () {
+                $("#blogPost").html(renderPosts);
+                for (let blog of mainData) {
+                    let comments = {
+                        comments: null
+                    };
+                    let commentObjects = [];
+                    for (let comment of commentData) {
+                        comment['creationDate'] = moment(comment._kmd.ect).format("MMM Do YYYY");
+                        if (comment.PostId == blog._id) {
+                            commentObjects.push(comment);
+                        }
                     }
+                    comments['comments'] = commentObjects;
+                    $.get('templates/comments.html', function (template) {
+                        let currentCommentUrl = "#comments-" + blog._id;
+                        let renderComments = Mustache.render(template, comments);
+                        $(currentCommentUrl).html(renderComments);
+
+                    });
                 }
-                comments['comments'] = commentObjects;
-                $.get('templates/comments.html', function (template) {
-                    let currentCommentUrl = "#comments-" + blog._id;
-                    let renderComments = Mustache.render(template, comments);
-                    $(currentCommentUrl).html(renderComments);
-
+                $('.commentForm').find('.form-control').attr("disabled", "disabled");
+                $('.commentForm').find('.btn-sm').on('click', function () {
+                    showPopup('error', "Please log in to comment");
                 });
-            }
-            $('.commentForm').find('.form-control').attr("disabled", "disabled");
-            $('.commentForm').find('.btn-sm').on('click', function () {
-                showPopup('error', "Please log in to comment");
-            });
-
+            }, 200);
         });
     };
 
@@ -58,42 +60,45 @@ class HomeView {
                 blogPosts: mainData
 
             };
-            let renderPosts = Mustache.render(template, blogPosts);
-            $("#blogPost").html(renderPosts);
-            //<experimental>
-            for (let blog of mainData) {
-                let comments = {
-                    comments: null
-                };
-                let commentObjects = [];
-                for (let comment of commentData) {
-                    if (comment.PostId == blog._id) {
-                        commentObjects.push(comment);
-                    }
-                }
-                comments['comments'] = commentObjects;
-                $.get('templates/comments.html', function (template) {
-                    let currentCommentUrl = "#comments-" + blog._id;
-                    let renderComments = Mustache.render(template, comments);
-                    $(currentCommentUrl).html(renderComments);
-                });
-
+            for (let post of mainData) {
+                post['date'] = moment(post._kmd.ect).format("MMM Do YYYY");
             }
+            let renderPosts = Mustache.render(template, blogPosts);
+            setTimeout(function () {
+                $("#blogPost").html(renderPosts);
+                for (let blog of mainData) {
+                    let comments = {
+                        comments: null
+                    };
+                    let commentObjects = [];
+                    for (let comment of commentData) {
+                        comment['creationDate'] = moment(comment._kmd.ect).format("MMM Do YYYY");
+                        if (comment.PostId == blog._id) {
+                            commentObjects.push(comment);
+                        }
+                    }
+                    comments['comments'] = commentObjects;
+                    $.get('templates/comments.html', function (template) {
+                        let currentCommentUrl = "#comments-" + blog._id;
+                        let renderComments = Mustache.render(template, comments);
+                        $(currentCommentUrl).html(renderComments);
+                    });
 
-            $('.commentForm').find('.btn-sm').on('click', function () {
-                let textAreaId = "comment-" + this.id;
-                let postId = this.id;
-                let content = document.getElementById(textAreaId).value;
-                let currentUserUsername = sessionStorage.username;
-                let data = {
-                    PostId: postId,
-                    commentAuthor: currentUserUsername,
-                    commentContent: content
-                };
-                triggerEvent('comment', data);
-            });
+                }
 
-
+                $('.commentForm').find('.btn-sm').on('click', function () {
+                    let textAreaId = "comment-" + this.id;
+                    let postId = this.id;
+                    let content = document.getElementById(textAreaId).value;
+                    let currentUserUsername = sessionStorage.username;
+                    let data = {
+                        PostId: postId,
+                        commentAuthor: currentUserUsername,
+                        commentContent: content
+                    };
+                    triggerEvent('comment', data);
+                });
+            }, 200)
         });
 
     }
@@ -110,7 +115,9 @@ class HomeView {
             let blogPosts = {
                 blogPosts: mainData
             };
-
+            for (let post of mainData) {
+                post['date'] = moment(post._kmd.ect).format("MMM Do YYYY");
+            }
             let renderPosts = Mustache.render(template, blogPosts);
             //RENDER POSTS AND COMMENTS
             setTimeout(function () {
@@ -121,6 +128,7 @@ class HomeView {
                     };
                     let commentObjects = [];
                     for (let comment of commentData) {
+                        comment['creationDate'] = moment(comment._kmd.ect).format("MMM Do YYYY");
                         if (comment.PostId == blog._id) {
                             if (commentObjects.length >= 5) {
                                 //TODO HIDE COMMENTS
@@ -156,7 +164,7 @@ class HomeView {
                     };
                     triggerEvent('comment', data);
                 });
-            }, 300);
+            }, 200);
 
 
         });
