@@ -15,7 +15,7 @@ class PostController {
             return;
         }
         if(requestData.content.length<30){
-            showPopup('error',"Post content too short");
+            showPopup('error',"Post content too short, post should be atleast 30 characters");
             return;
         }
         let requestUrl = this._baseUrl + "appdata/" + this._appId + "/posts";

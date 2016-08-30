@@ -1,7 +1,7 @@
 <div id="editProfilePage">
 <form id="editProfileForm">
-    <input type='file' onchange="readURL(this);" />
-    <img class="img-rounded" id="profileImg" src="#" alt="your image" />
+  <!--  <input type='file' onchange="readURL(this);" />
+    <img class="img-rounded" id="profileImg" src="#" alt="your image" />  -->
     <label for="firstName">First name:</label>
     <input id="firstName" type="text" class="form-control"/>
     <label for="lastName">Last name:</label>
@@ -12,7 +12,7 @@
         <input id="femaleRadioButton" name="genderSelect" type="radio" valu="f">Female<br>
     </form>
     <br>
-    <form class="form-inline">
+    <form id="buttonGroup" class="form-inline">
     <button class="btn btn-lg" type="button" id="submitEditProfilePage">Submit changes</button>
     <button class="btn btn-lg" type="button" id="cancelEditProfilePage">Back</button>
     </form>

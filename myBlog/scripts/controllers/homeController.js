@@ -116,5 +116,6 @@ class HomeController {
                 location.reload();
                 return;
             });
+
     }
 }

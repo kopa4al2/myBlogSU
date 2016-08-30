@@ -10,7 +10,7 @@ body{
 
 }
 #editProfilePageButton{
-    position:absolute;
+   /* position:absolute;*/
     top:50%;
 }
 .dot {
