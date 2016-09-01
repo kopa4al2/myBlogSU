@@ -11,8 +11,7 @@ class ProfileController {
         let requestUrl = this._baseUrl + "user/" + this._appId + "/" + sessionStorage.userId;
         this._requester.get(requestUrl,
             function successCallback(responseData) {
-                console.log(responseData);
-                _that._profileView.showProfilePage(responseData, isAdmin); //TODO IMPLEMENT FULL LOGIC
+                _that._profileView.showProfilePage(responseData, isAdmin); 
             },
             function error(responseData) {
                 showPopup('error', "Could not read profile page")

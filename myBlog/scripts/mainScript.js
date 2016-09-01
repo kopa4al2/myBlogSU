@@ -5,9 +5,7 @@ const _guestAuthToken = "f1ebfa7b-cdf4-4648-9240-6f2e7ee5bcef.BAdeztOtGwfa05SQNN
 (function () {
     let authService = new AuthorizationService(baseUrl, appId, appKey, _guestAuthToken);
     authService.initAuthorizationType("Kinvey");
-    let requester = new Requester(authService);
-
-    let menuSelector=".container-fluid";
+    let requester = new Requester(authService)
     let selector = ".menu-container";
     let mainContentSelector = ".main-content";
 
@@ -18,12 +16,10 @@ const _guestAuthToken = "f1ebfa7b-cdf4-4648-9240-6f2e7ee5bcef.BAdeztOtGwfa05SQNN
     let userController = new UserController(userView, requester, baseUrl, appId);
 
     let postView= new PostView(selector,mainContentSelector);
-    let postController=new PostController(postView,requester,appId,baseUrl)
+    let postController=new PostController(postView,requester,appId,baseUrl);
 
     let profileView=new ProfileView(selector,mainContentSelector);
     let profileController=new ProfileController(profileView,requester,baseUrl,appId);
-
-    // Create HomeView, HomeController, UserView, UserController, PostView and PostController
 
     initEventServices();
     onRoute("#/", function () {
@@ -36,22 +32,14 @@ const _guestAuthToken = "f1ebfa7b-cdf4-4648-9240-6f2e7ee5bcef.BAdeztOtGwfa05SQNN
         else if(!authService.isLoggedIn()) {
             homeController.showGuestPage();
         }
-        // Check if user is logged in and if its not show the guest page, otherwise show the user page...
     });
     
-    
-    onRoute("#/post-:id", function () {
-        // Create a redirect to one of the recent posts...
-    });
-
     onRoute("#/login", function () {
-        // Show the login page...
         userController.showLoginPage(authService.isLoggedIn());
     });
 
     onRoute("#/register", function () {
         userController.showRegisterPage(authService.isLoggedIn());
-
     });
 
     onRoute("#/logout", function () {
@@ -60,7 +48,6 @@ const _guestAuthToken = "f1ebfa7b-cdf4-4648-9240-6f2e7ee5bcef.BAdeztOtGwfa05SQNN
 
     onRoute('#/posts/create', function () {
         postController.showCreatePostPage(authService.isLoggedIn(),authService.isAdmin(),sessionStorage.username);
-        // Show the new post page...
     });
 
     onRoute('#/profile/edit',function(){
@@ -74,14 +61,10 @@ const _guestAuthToken = "f1ebfa7b-cdf4-4648-9240-6f2e7ee5bcef.BAdeztOtGwfa05SQNN
         homeController.comment(data);
     });
     bindEventHandler('login', function (ev, data) {
-
-        // Login the user...
         userController.login(data);
     });
 
     bindEventHandler('register', function (ev, data) {
-
-        // Register a new user...
         userController.register(data);
     });
 

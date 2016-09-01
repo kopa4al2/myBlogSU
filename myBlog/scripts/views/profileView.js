@@ -27,7 +27,6 @@ class ProfileView {
                     gender: userData.gender
                 };
                 let renderProfilePage = Mustache.render(template, profileData);
-                console.log("profile renderer" + renderProfilePage);
                 $("#profilePage").html(renderProfilePage);
             });
 

@@ -8,7 +8,6 @@ class HomeController {
 
     showUserPage() {
         let _that = this;
-        //let recentPosts = [];
         let requestUrl = this._serviceUrl + "appdata/" + this._appId + "/posts";
         let requestUrlComments = this._serviceUrl + "appdata/" + this._appId + "/comments";
         this._requester.get(requestUrl,

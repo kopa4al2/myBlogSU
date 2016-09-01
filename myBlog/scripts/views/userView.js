@@ -10,7 +10,6 @@ class UserView {
             templateUrl = "templates/user-page.html"
         }
         else {
-
             templateUrl = "templates/guest-page.html"
         }
 

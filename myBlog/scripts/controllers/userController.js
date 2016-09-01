@@ -19,7 +19,6 @@ class UserController {
         this._requester.post(ajaxUrl, requestData,
             function success(data) {
                 showPopup('success',"You have successfully logged in");
-                let responseData=data;
                 sessionStorage['username']=data.username;
                 sessionStorage['_authToken']=data._kmd.authtoken;
                 sessionStorage['userId']=data._id;

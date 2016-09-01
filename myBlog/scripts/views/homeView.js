@@ -97,6 +97,7 @@ class HomeView {
                         commentContent: content
                     };
                     triggerEvent('comment', data);
+
                 });
             }, 200)
         });
